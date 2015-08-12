@@ -971,11 +971,12 @@ RegExp.make = (function () {
   }
 
   function make(flags, template, ...values) {
+    // make is always bound to a flags string
     if ('string' === typeof template && values.length === 0) {
       // Allow RegExp.make(i)`...` to specify flags.
       // This calling convention is disjoint with use as a template tag
       // since the typeof a template record is 'object'.
-      return make.bind(null, template /* use as flags instead */);
+      return make.bind(null, flags + template /* use as flags instead */);
     }
 
     /** @type {!Array.<string>} */
